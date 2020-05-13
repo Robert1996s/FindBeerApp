@@ -20,17 +20,17 @@ class MainActivity : AppCompatActivity() {
 // Create a new user with a first and last name
 
         // Create a new user with a first and last name
-        val user: MutableMap<String, Any> = HashMap()
-        user["first"] = "Ada"
-        user["last"] = "Lovelace"
-        user["born"] = 1815
+        val bar: MutableMap<String, Any> = HashMap()
+        bar["name"] = "Fridays"
+        bar["Price"] = 59
+        bar["Distance"] = 250
 
 // Add a new document with a generated ID
         
 
 // Add a new document with a generated ID
-        db.collection("users")
-            .add(user)
+        db.collection("bars")
+            .add(bar)
             .addOnSuccessListener { documentReference ->
                 Log.d(
                     "!!!",

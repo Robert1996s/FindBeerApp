@@ -1,7 +1,7 @@
 package com.example.findbeerapp
 
-import android.R
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.*
@@ -16,9 +16,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_maps)
+        setContentView(R.layout.activity_maps)
 
-        //val mapView = findViewById<MapsActivity>(R.id.map_View)
+        val mapView = findViewById<View>(R.id.map_display)
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.

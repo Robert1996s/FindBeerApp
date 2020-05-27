@@ -23,15 +23,15 @@ class BarRecycleAdapter(private val context : Context, private val bars: List<Ba
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val bar = bars[position]
+        holder.textViewName.text = bar.name
+        holder.textViewPrice.setText(""+bar.price + ":-")
+
     }
 
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         val textViewName = itemView.findViewById<TextView>(R.id.textName)
         val textViewPrice = itemView.findViewById<TextView>(R.id.textPrice)
-
-
-
     }
 
 

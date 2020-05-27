@@ -3,6 +3,7 @@ package com.example.findbeerapp
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
@@ -15,8 +16,14 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.common.primitives.UnsignedInts.sort
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_main.*
+import com.google.firebase.firestore.Query
+import com.google.type.LatLng
+import java.util.*
+import java.util.Arrays.sort
+import java.util.Collections.sort
+import kotlin.Comparator
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
         val db = FirebaseFirestore.getInstance()
         val beerPlacesList = mutableListOf<Bar>()
-        val barsRef = db.collection("bars")
+        val barsRef = db.collection("bars").orderBy("price")
 
 
         val recyclerView = findViewById<RecyclerView>(R.id.beer_list)
@@ -54,6 +61,7 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = BarRecycleAdapter(this, beerPlacesList)
         recyclerView.adapter = adapter
+
 
 
         //Buttons
@@ -64,13 +72,12 @@ class MainActivity : AppCompatActivity() {
         val addBarFabButton = findViewById<FloatingActionButton>(R.id.addBar_Fab_Button)
 
 
-
         nearmeButton.setOnClickListener {
             println("1")
         }
 
         priceButton.setOnClickListener {
-            println("2")
+
         }
 
         favouriteButton.setOnClickListener {
@@ -78,14 +85,34 @@ class MainActivity : AppCompatActivity() {
         }
 
         //Shows the map in new activity
-        mapButton.setOnClickListener {view ->
+        mapButton.setOnClickListener { view ->
             val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
         }
+
+
         addBarFabButton.setOnClickListener { view ->
             val intent = Intent(this, AddBarActivity::class.java)
             startActivity(intent)
         }
+
+
+
+
+        /*
+        fun sortBarPrice() {
+            beerPlacesList.sort(barsRef, object : Comparator() {
+                fun comparePrice(o1: Bar, o2: Bar): Int {
+                    return o1.price.compareTo(o2.price)
+                }
+            })
+        } */
+
+
+
+
+
+
 
 
 
@@ -110,9 +137,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
-
         //Reads any changes in firebase data
         barsRef.addSnapshotListener{ snapshot, e ->
             if( snapshot != null ) {
@@ -123,13 +147,22 @@ class MainActivity : AppCompatActivity() {
                         beerPlacesList.add(newBar!!)
                     adapter.notifyDataSetChanged()
                 }
-
             }
         }
 
 
 
-    }
+
+
+    } //onCreate
+
+
+    /*private fun orderPrice() {
+        db.collection("bars").document().collection("bars").orderBy("price")
+        finish()
+        startActivity(getIntent())
+    }*/
+
 
 
 
@@ -140,7 +173,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             println("!!! Permission denied")
         }
-
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 

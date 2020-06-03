@@ -6,13 +6,106 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/beer_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/price_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/list_item_bar" />
+
+    <ImageButton
+        android:id="@+id/near_me_button"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_near_me" />
+
+    <ImageButton
+        android:id="@+id/price_button"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/near_me_button"
+        app:srcCompat="@drawable/ic_price" />
+
+    <ImageButton
+        android:id="@+id/favourite_button"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/price_button"
+        app:srcCompat="@drawable/ic_favourite" />
+
+    <ImageButton
+        android:id="@+id/map_button"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/favourite_button"
+        app:srcCompat="@drawable/ic_map" />
+
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="1dp"
+        android:text="Nära Mig"
+        app:layout_constraintEnd_toEndOf="@+id/near_me_button"
+        app:layout_constraintStart_toStartOf="@+id/near_me_button"
+        app:layout_constraintTop_toBottomOf="@+id/near_me_button" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pris"
+        app:layout_constraintEnd_toEndOf="@+id/price_button"
+        app:layout_constraintStart_toStartOf="@+id/price_button"
+        app:layout_constraintTop_toBottomOf="@+id/price_button" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Favoriter"
+        app:layout_constraintEnd_toEndOf="@+id/favourite_button"
+        app:layout_constraintStart_toStartOf="@+id/favourite_button"
+        app:layout_constraintTop_toBottomOf="@+id/favourite_button" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Karta"
+        app:layout_constraintEnd_toEndOf="@+id/map_button"
+        app:layout_constraintStart_toStartOf="@+id/map_button"
+        app:layout_constraintTop_toBottomOf="@+id/map_button" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addBar_Fab_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/beer_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add_fab" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

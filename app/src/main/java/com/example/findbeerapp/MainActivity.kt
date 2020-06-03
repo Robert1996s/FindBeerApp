@@ -32,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     private val REQUEST_LOCATION = 1
     private var locationRequest : LocationRequest? = null
 
+    //var ltLng : com.google.android.gms.maps.model.LatLng? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -46,7 +48,6 @@ class MainActivity : AppCompatActivity() {
                 if(location != null) {
                     val lat = location.latitude
                     val lng = location.longitude
-                    println("!!! lat: $lat , lng: $lng")
                 }
             }
         }
@@ -87,6 +88,7 @@ class MainActivity : AppCompatActivity() {
         //Shows the map in new activity
         mapButton.setOnClickListener { view ->
             val intent = Intent(this, MapsActivity::class.java)
+            //intent.putExtra("ltLng", ltLng)
             startActivity(intent)
         }
 
@@ -95,22 +97,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, AddBarActivity::class.java)
             startActivity(intent)
         }
-
-
-
-
-        /*
-        fun sortBarPrice() {
-            beerPlacesList.sort(barsRef, object : Comparator() {
-                fun comparePrice(o1: Bar, o2: Bar): Int {
-                    return o1.price.compareTo(o2.price)
-                }
-            })
-        } */
-
-
-
-
 
 
 
@@ -133,7 +119,7 @@ class MainActivity : AppCompatActivity() {
                 if(newBar != null)
                     beerPlacesList.add(newBar!!)
 
-                println("!!!Robert :${newBar}")
+
             }
         }
 
@@ -146,6 +132,7 @@ class MainActivity : AppCompatActivity() {
                     if(newBar != null)
                         beerPlacesList.add(newBar!!)
                     adapter.notifyDataSetChanged()
+                    println("!!!db" + newBar?.ltLng)
                 }
             }
         }

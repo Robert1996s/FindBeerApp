@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "185579444313",
+    "firebase_url": "https://findbeerapp-f7fe5.firebaseio.com",
+    "project_id": "findbeerapp-f7fe5",
+    "storage_bucket": "findbeerapp-f7fe5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185579444313:android:ad03c362c7335f99b87948",
+        "android_client_info": {
+          "package_name": "com.example.findbeerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "185579444313-c4c68161ts1e9mu4ud34qutiahde3r0t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.findbeerapp",
+            "certificate_hash": "c77eec75b9f9b18cd792fbc3db10ec159b670288"
+          }
+        },
+        {
+          "client_id": "185579444313-3us5liokkpta73fleb1ohr2fnnqmh8qd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAryLxDcWeysuBZ57Q92xmQUVcAFdeK8ck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "185579444313-3us5liokkpta73fleb1ohr2fnnqmh8qd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

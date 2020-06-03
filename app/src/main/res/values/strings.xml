@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FindBeerApp</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps_new">Map</string>
 </resources>

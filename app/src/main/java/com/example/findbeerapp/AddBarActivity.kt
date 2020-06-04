@@ -7,6 +7,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_add_bar.*
 
@@ -14,11 +16,13 @@ class AddBarActivity : AppCompatActivity() {
 
     var lat: Double? = null
     var lng: Double? = null
-    lateinit var ltlng : Any
+    lateinit var ltlng : myLatLng
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_bar)
+
+        ltlng = intent.getSerializableExtra("ltLng") as myLatLng
 
         //Add bar buttons
         val editBarName = findViewById<TextView>(R.id.edit_bar_name)
@@ -30,8 +34,6 @@ class AddBarActivity : AppCompatActivity() {
         val getBarPrice = editBarPrice
 
 
-
-
         addBarLocation.setOnClickListener {view ->
             val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
@@ -39,27 +41,14 @@ class AddBarActivity : AppCompatActivity() {
 
 
         addBarButton.setOnClickListener {view ->
-            checkEmpty()
+            checkEmpty() //addNewBar()
             val intent = Intent(this, MainActivity::class.java)
+            //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
 
-
-        lat = intent.getDoubleExtra("lat",1.0)
-        lng = intent.getDoubleExtra("lng",1.0)
-        ltlng = intent.getParcelableExtra<LatLng>("ltLng")
-
-        println("ltlng" + ltlng)
-
-
-
     } //OnCreate
 
-    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        lat = data?.getDoubleExtra("lat",1.0)
-        lng = data?.getDoubleExtra("lng",1.0)
-    } */
 
 
     //check that the user has enter a name and price
@@ -77,17 +66,18 @@ class AddBarActivity : AppCompatActivity() {
     }
 
 
-
     private fun addNewBar() {
         val db = FirebaseFirestore.getInstance()
         val barName = edit_bar_name.text.toString()
         val barPrice : Int = edit_bar_price.text.toString().toInt()
 
-        //val barLat = lat?.toString()
-        //val barLng = lng.toString().toInt()
-        val bar = Bar(barName, barPrice, ltLng = ltlng)
-        db.collection("bars").add(bar)/*.addOnSuccessListener { println("!!!SuccesBar") }.addOnFailureListener {
-            println("!!!Fail" + it.localizedMessage)
-        } */
+
+        if(ltlng == null) {
+            return
+        }
+
+        val bar = Bar(barName, barPrice, 0, 0, ltlng)
+        db.collection("bars").add(bar)
+        }
     }
-}
+

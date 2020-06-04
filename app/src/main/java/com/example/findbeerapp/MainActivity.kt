@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private val REQUEST_LOCATION = 1
     private var locationRequest : LocationRequest? = null
 
-    //var ltLng : com.google.android.gms.maps.model.LatLng? = null
+    //var ltLng : LatLng? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +88,6 @@ class MainActivity : AppCompatActivity() {
         //Shows the map in new activity
         mapButton.setOnClickListener { view ->
             val intent = Intent(this, MapsActivity::class.java)
-            //intent.putExtra("ltLng", ltLng)
             startActivity(intent)
         }
 

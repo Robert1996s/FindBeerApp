@@ -11,12 +11,14 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_maps.*
 
 
@@ -25,20 +27,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
 
     private lateinit var mMap: GoogleMap
 
-    //private lateinit var originPosition: Point
-    //private lateinit var destinationPosition: Point
-    //private var destinationMarker: Marker? = null
-
     var lat: Double? = null
     var lng: Double? = null
-    var ltLng : LatLng? = null
+    var ltLng : myLatLng? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
 
         val mapView = findViewById<View>(R.id.map_display)
-        //val currentlocation : Location
 
 
         addBarMarker.isEnabled = false
@@ -46,10 +43,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
         addBarMarker.setOnClickListener { view ->
             val intent = Intent(this, AddBarActivity::class.java)
 
-            intent.putExtra("lat", lat)
-            intent.putExtra("lng", lng)
+
             intent.putExtra("ltLng", ltLng)
             startActivity(intent)
+            println("!!!" + ltLng)
         }
 
 
@@ -57,7 +54,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
         val mapFragment = this.supportFragmentManager
             .findFragmentById(R.id.map_display) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
 
 
 
@@ -69,25 +65,45 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
         mMap = googleMap
         mMap.setOnInfoWindowClickListener(this)
         mMap.isMyLocationEnabled = true
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(12.0f))
-
-
-        //val newBarMarker = intent.getParcelableExtra<LatLng>("ltLng")
-        //mMap.addMarker(MarkerOptions().position(ltLng))
+        val stockholm = LatLng(59.3,18.06)
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(stockholm, 12.0f)) //gps
 
 
 
         //Listens to map clicks
         mMap.setOnMapClickListener {latLng ->
-
-            mMap.clear()
-            mMap.addMarker(MarkerOptions().position(latLng))
+            //val myLatLng: LatLng = latLng
+            mMap.clear() // val på nyligen lagd marker och sedan bara ta bort den
+            val newMarker = mMap.addMarker(MarkerOptions().position(latLng))
             addBarMarker.isEnabled = true
+            ltLng = myLatLng(latLng.latitude, latLng.longitude)
+        }
 
-            lat = latLng?.latitude
-            lng = latLng?.longitude
-            ltLng = latLng
 
+        val db = FirebaseFirestore.getInstance()
+        val barsRef = db.collection("bars").orderBy("price")
+        val barPlaceList  = mutableListOf<Bar>()
+
+        barsRef.get().addOnSuccessListener { documentSnapshot ->
+            for (document in documentSnapshot.documents) {
+                val newBar = document.toObject(Bar::class.java)
+                if(newBar != null)
+                    barPlaceList.add(newBar!!)
+
+
+
+                for(bar in barPlaceList) {
+                    if (bar.ltLng != null) {
+                        val location : LatLng? = bar.ltLng?.convertToGoogleLatLng()
+                        if (location != null) {
+                            mMap.addMarker(
+                                MarkerOptions().position(location))
+                        }
+                    }
+
+
+                }
+            }
         }
 
     }
@@ -108,6 +124,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
     override fun onMarkerClick(point: Marker?): Boolean {
         TODO()
     }
+
 
 
 

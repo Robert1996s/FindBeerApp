@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     private val REQUEST_LOCATION = 1
     private var locationRequest : LocationRequest? = null
 
-    //var ltLng : LatLng? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +51,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //connect firebase
         val db = FirebaseFirestore.getInstance()
         val beerPlacesList = mutableListOf<Bar>()
         val barsRef = db.collection("bars").orderBy("price")

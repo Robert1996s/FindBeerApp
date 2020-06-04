@@ -22,7 +22,7 @@ class AddBarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_bar)
 
-        ltlng = intent.getSerializableExtra("ltLng") as myLatLng
+
 
         //Add bar buttons
         val editBarName = findViewById<TextView>(R.id.edit_bar_name)
@@ -70,6 +70,7 @@ class AddBarActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val barName = edit_bar_name.text.toString()
         val barPrice : Int = edit_bar_price.text.toString().toInt()
+        ltlng = intent.getSerializableExtra("ltLng") as myLatLng
 
 
         if(ltlng == null) {

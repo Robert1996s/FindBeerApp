@@ -30,6 +30,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
     var lat: Double? = null
     var lng: Double? = null
     var ltLng : myLatLng? = null
+    var newMarker: Marker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,15 +67,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
         mMap.setOnInfoWindowClickListener(this)
         mMap.isMyLocationEnabled = true
         val stockholm = LatLng(59.3,18.06)
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(stockholm, 12.0f)) //gps
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(stockholm, 10.0f)) //gps
 
 
 
         //Listens to map clicks
         mMap.setOnMapClickListener {latLng ->
-            //val myLatLng: LatLng = latLng
-            mMap.clear() // val på nyligen lagd marker och sedan bara ta bort den
-            val newMarker = mMap.addMarker(MarkerOptions().position(latLng))
+            newMarker?.remove()
+            newMarker = mMap.addMarker(MarkerOptions().position(latLng))
             addBarMarker.isEnabled = true
             ltLng = myLatLng(latLng.latitude, latLng.longitude)
         }

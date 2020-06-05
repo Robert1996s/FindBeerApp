@@ -79,7 +79,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
             ltLng = myLatLng(latLng.latitude, latLng.longitude)
         }
 
-
+        //Adds new bar
         val db = FirebaseFirestore.getInstance()
         val barsRef = db.collection("bars").orderBy("price")
         val barPlaceList  = mutableListOf<Bar>()
@@ -91,10 +91,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
                     barPlaceList.add(newBar!!)
 
 
-
+                //Place a marker for each bar
                 for(bar in barPlaceList) {
                     if (bar.ltLng != null) {
                         val location : LatLng? = bar.ltLng?.convertToGoogleLatLng()
+                        //val barIconMarker: Marker = (MarkerOptions().position)
+                        //marker.setIcon(fromResource(R.drawable.ic_bar_icon))
                         if (location != null) {
                             mMap.addMarker(
                                 MarkerOptions().position(location))
